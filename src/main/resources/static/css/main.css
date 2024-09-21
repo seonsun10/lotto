@@ -1,0 +1,18 @@
+#lottoTb td span{
+    font-size: 18pt;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-shadow: 1px 1px 0 #444;
+    font-family: 'Encode Sans';
+    box-shadow: 1px 2px 2px rgba(255,255,255,.95) inset,-1px -1px 2px rgba(0,0,0,.5) inset;
+    margin: 2px;
+    font-weight: 600;
+    color: #fff;
+    display: inline-block;
+    text-align: center;
+}
+
+.plus{background-size: cover; width: 25px; height: 25px}
+.numTd{display: flex; gap: 10px; align-items: center;}
