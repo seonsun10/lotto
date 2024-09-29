@@ -2,22 +2,26 @@ package com.sw.lotto.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sw.lotto.dto.LottoDTO;
+import com.sw.lotto.service.LottoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class LottoController {
 
-    ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+
+    @Autowired
+    private LottoService lottoService;
 
     // 로또 회차
     private static int count = 1;
@@ -62,14 +66,28 @@ public class LottoController {
      */
     @Scheduled(fixedRate = 5000)
     public void lottoSchduled(){
-        System.out.println("현재 회차 : " + count);
         LottoDTO lottoDTO = this.getLottoData(String.valueOf(count));
         lottoList.add(lottoDTO);
 
         // 10개마다 DB에 저장
         if(lottoList.size() % 10 == 0 ){
-
+            System.out.println("현재 저장 회차 =====> " + lottoList.size());
+            this.saveLottoData(lottoList);
         }
         count++;
+    }
+
+    /**
+     * 로또 정보 저장
+     * @param lottoList
+     */
+    @Transactional
+    public void saveLottoData(List<LottoDTO> lottoList){
+        // DB에 저장
+        try {
+            lottoService.insertLottoNum(lottoList);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
