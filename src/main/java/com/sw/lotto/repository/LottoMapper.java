@@ -9,5 +9,7 @@ import java.util.List;
 @Mapper
 public interface LottoMapper {
 
-    void insertLottoNum(List<LottoDTO> lottoList);
+    List<LottoDTO> selectLottoNum();
+
+    void insertLottoNum(LottoDTO lotto);
 }

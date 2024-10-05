@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +30,15 @@ public class LottoController {
     private List<LottoDTO> lottoList = new ArrayList<>();
 
     @RequestMapping({"","/"})
-    public String main(){
+    public ModelAndView main(){
+        ModelAndView mv = new ModelAndView();
+        List<LottoDTO> resultList = this.selectLottoNum();
+        System.out.println("resultList =====> " + resultList);
 
-        return "lottoMain";
+        mv.addObject("resultList", resultList);
+        mv.setViewName("lottoMain");
+//        this.lottoSchduled();
+        return mv;
     }
 
     /**
@@ -62,19 +69,28 @@ public class LottoController {
     }
 
     /**
+     * 로또 정보 조회
+     * @return
+     */
+    public List<LottoDTO> selectLottoNum(){
+        return lottoService.selectLottoNum();
+    }
+
+    /**
      * DB에 저장하기 위한 로또 정보 조회 스케줄
      */
-    @Scheduled(fixedRate = 5000)
+//    @Scheduled(fixedRate = 5000)
     public void lottoSchduled(){
-        LottoDTO lottoDTO = this.getLottoData(String.valueOf(count));
+        int drwNo = 1135;
+        LottoDTO lottoDTO = this.getLottoData(String.valueOf(drwNo));
         lottoList.add(lottoDTO);
 
         // 10개마다 DB에 저장
-        if(lottoList.size() % 10 == 0 ){
+//        if(lottoList.size() % 10 == 0 ){
             System.out.println("현재 저장 회차 =====> " + lottoList.size());
             this.saveLottoData(lottoList);
-        }
-        count++;
+//        }
+//        count++;
     }
 
     /**

@@ -2,7 +2,53 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.sw.lotto.repository.LottoMapper">
-    <insert id="insertLottoNum" parameterType="LottoDTO">
 
+    <select id="selectLottoNum" resultType="map">
+        SELECT TOT_SELLAMNT,
+               DRW_NO_DATE,
+               FIRST_ACCUMANMNT,
+               FIRST_PRZWNER_CO,
+               FIRST_WINAMNT,
+               DRW_NO,
+               BNUS_NO,
+               DRWT_NO1,
+               DRWT_NO2,
+               DRWT_NO3,
+               DRWT_NO4,
+               DRWT_NO5,
+               DRWT_NO6
+          FROM TB_LOTTO_DATA
+    </select>
+
+    <insert id="insertLottoNum" parameterType="LottoDTO">
+        INSERT INTO TB_LOTTO_DATA(
+          TOT_SELLAMNT,
+          DRW_NO_DATE,
+          FIRST_ACCUMANMNT,
+          FIRST_PRZWNER_CO,
+          FIRST_WINAMNT,
+          DRW_NO,
+          BNUS_NO,
+          DRWT_NO1,
+          DRWT_NO2,
+          DRWT_NO3,
+          DRWT_NO4,
+          DRWT_NO5,
+          DRWT_NO6
+        ) VALUES(
+          #{totSellamnt},
+          #{drwNoDate},
+          #{firstAccumamnt},
+          #{firstPrzwnerCo},
+          #{firstWinamnt},
+          #{drwNo},
+          #{bnusNo},
+          #{drwtNo1},
+          #{drwtNo2},
+          #{drwtNo3},
+          #{drwtNo4},
+          #{drwtNo5},
+          #{drwtNo6}
+        )
     </insert>
 </mapper>

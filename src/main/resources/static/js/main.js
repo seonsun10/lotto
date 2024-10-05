@@ -21,6 +21,7 @@ var doAction = function() {
                 data: {drwNo: 1136},
                 success: function(data){
                     self.afterCallLotto(data);
+                    console.log(data);
                 },
                 error: function(error){
                     console.log('error == > ' + error);

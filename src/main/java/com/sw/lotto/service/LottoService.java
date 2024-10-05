@@ -14,8 +14,15 @@ import java.util.List;
 public class LottoService {
     private final LottoMapper lottoMapper;
 
+    public List<LottoDTO> selectLottoNum() {
+        return lottoMapper.selectLottoNum();
+    }
+
     public void insertLottoNum(List<LottoDTO> lottoList) {
-        lottoMapper.insertLottoNum(lottoList);
+
+        for(LottoDTO lotto : lottoList) {
+            lottoMapper.insertLottoNum(lotto);
+        }
     }
 
 }
